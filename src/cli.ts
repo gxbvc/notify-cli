@@ -50,8 +50,9 @@ program
 
     const results: { mac?: boolean; ntfy?: boolean; error?: string } = {};
 
-    // macOS notification
-    if (!options.ntfyOnly) {
+    // macOS notification (only attempted on macOS; other platforms skip it
+    // so a successful ntfy push isn't dragged to a failure/exit(1))
+    if (!options.ntfyOnly && process.platform === "darwin") {
       results.mac = sendMacNotification(message, options.title);
     }
 
